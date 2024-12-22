@@ -36,7 +36,7 @@ app.get("/listTeachers", async function (req, res) {
   res.end(JSON.stringify(data));
 });
 
-app.get("/getTeacherInfo", async function (req, res) {
+app.post("/getTeacherInfo", async function (req, res) {
   let reqBody = req.body;
   console.log("Request received to get Teacher Info");
   let data = await readTeacherInfo(reqBody.id);
@@ -56,7 +56,7 @@ app.post("/addTeacher", async function (req, res) {
   res.end(JSON.stringify(data));
 });
 
-app.put("/editTeacher", async function (req, res) {
+app.post("/editTeacher", async function (req, res) {
   let reqBody = req.body;
   console.log(
     "Request received to update teacher. Req body: " + JSON.stringify(reqBody)
@@ -67,7 +67,7 @@ app.put("/editTeacher", async function (req, res) {
   res.end(JSON.stringify(data));
 });
 
-app.delete("/deleteTeacher", async function (req, res) {
+app.post("/deleteTeacher", async function (req, res) {
   let reqBody = req.body;
   console.log(
     "Request received to delete teacher. Req body: " + JSON.stringify(reqBody)
@@ -88,7 +88,7 @@ app.get("/listStudents", async function (req, res) {
   res.end(JSON.stringify(data));
 });
 
-app.get("/getStudentInfo", async function (req, res) {
+app.post("/getStudentInfo", async function (req, res) {
   let reqBody = req.body;
   console.log("Request received to get Student Info");
   let data = await readStudentInfo(reqBody.id);
@@ -113,7 +113,19 @@ app.post("/addStudent", async function (req, res) {
   res.end(JSON.stringify(data));
 });
 
-app.delete("/deleteStudent", async function (req, res) {
+app.post("/editStudent", async function (req, res) {
+  let reqBody = req.body;
+  console.log(
+    "Request received to update Student. Req body: " + JSON.stringify(reqBody)
+  );
+  let data = await updateStudent(reqBody.name,reqBody.age,reqBody.hometown,reqBody.id);
+
+  res.setHeader("Content-Type", "application/json");
+  res.end(JSON.stringify(data));
+});
+
+
+app.post("/deleteStudent", async function (req, res) {
   let reqBody = req.body;
   console.log(
     "Request received to delete student. Req body: " + JSON.stringify(reqBody)
@@ -124,15 +136,5 @@ app.delete("/deleteStudent", async function (req, res) {
   res.end(JSON.stringify(data));
 });
 
-app.put("/editStudent", async function (req, res) {
-  let reqBody = req.body;
-  console.log(
-    "Request received to update Student. Req body: " + JSON.stringify(reqBody)
-  );
-  let data = await updateStudent(reqBody.name,reqBody.age,reqBody.hometown,reqBody.id);
-
-  res.setHeader("Content-Type", "application/json");
-  res.end(JSON.stringify(data));
-});
 
 module.exports = app;
